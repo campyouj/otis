@@ -16,18 +16,18 @@
 # Contributor:
 #   benhamill
 
-request = require 'request'
-
-module.exports = (robot) ->
-
-  robot.respond /doge (.*)$/i, (msg) ->
-    phrase = msg.match[1].replace(/[\s]+/g, '/')
-    url = "http://dogesay.com/wow////" + phrase + ".png"
-
-    # prefetch URL to speed render
-    request url, (error, response, body)->
-      throw error if error
-
-    setTimeout () ->
-      msg.send url
-    ,1000
+#request = require 'request'
+#
+#module.exports = (robot) ->
+#
+#  robot.respond /doge (.*)$/i, (msg) ->
+#    phrase = msg.match[1].replace(/[\s]+/g, '/')
+#    url = "http://dogesay.com/wow////" + phrase + ".png"
+#
+#    # prefetch URL to speed render
+#    request url, (error, response, body)->
+#      throw error if error
+#
+#    setTimeout () ->
+#      msg.send url
+#    ,1000
