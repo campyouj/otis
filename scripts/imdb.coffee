@@ -1,34 +1,36 @@
-#
 # Description:
-#   Get the movie poster and synposis for a given query
+#   Movie database lookups
 #
 # Dependencies:
-#   None
+#   "cheerio": "0.10.7",
+#   "request": "2.14.0"
 #
 # Configuration:
 #   None
 #
 # Commands:
-#   hubot imdb the matrix
+#   elvis movie me <title> - look up a movie on IMDB
 #
 # Author:
-#   orderedlist
+#   gpspake
+#   dpritchett
+
+request = require 'request'
+cheerio = require 'cheerio'
+url     = "http://www.omdbapi.com/?t="
 
 module.exports = (robot) ->
-  robot.respond /(imdb|movie)( me)? (.*)/i, (msg) ->
-    query = msg.match[3]
-    msg.http("http://mymovieapi.com/")
-    .query({
-        limit: 1
-        type: 'json'
-        plot: 'simple'
-        q: query
-      })
-    .get() (err, res, body) ->
-      list = JSON.parse(body)
-      if movie = list[0]
-        msg.send "#{movie.poster.cover}#.png" if movie.poster
-        msg.send "#{movie.plot_simple}"
-        msg.send "#{movie.imdb_url}"
+
+  robot.respond /(movie|imdb|omdb)( me)? (.*)/i, (msg) ->
+    title = msg.match[3]
+    request "#{url + title}", (error, response, body)->
+      deets = JSON.parse body
+
+      if deets.Title
+        output = "#{deets.Title}, #{deets.Year}. #{deets.Plot}, #{deets.Poster}"
+        if deets.imdbID?
+          output += " http://www.imdb.com/title/#{deets.imdbID}"
       else
-        msg.send "That's not a movie, yo."
+        output = "Movie not found."
+
+      msg.send output
