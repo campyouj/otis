@@ -1,6 +1,5 @@
 # Description:
-#   Who says you can't teach an old hound dog new tricks?
-#   Elvis will do a trick to settle all of your disputes
+#   Hubot will do a trick to settle all of your disputes
 #   Never toss a coin again.
 #
 # Dependencies:
@@ -10,7 +9,7 @@
 #   None
 #
 # Commands:
-#   hubot do a trick - Elvis attempts a trick and either succeeds or fails
+#   hubot do a trick - hubot attempts a trick and either succeeds or fails
 
 random = (min,max) ->
   Math.floor(Math.random() * (max - min + 1)) + min
